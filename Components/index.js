@@ -56,7 +56,7 @@ const ComponentIndex = () => {
     <>
       <Row>
         <Col>
-          <NavigationBar />
+          {/* <NavigationBar /> */}
         </Col>
       </Row>
       <Container>
