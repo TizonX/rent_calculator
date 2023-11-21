@@ -1,9 +1,10 @@
 import React from 'react'
 import AuthLayout from '../../../../Components/Layouts/AuthLayout'
+import SignUpIndex from '../../../../Components/SignUp'
 const SignUp = () => {
   return (
     <AuthLayout>
-    <div>SignUp</div>
+    <SignUpIndex/>
 
     </AuthLayout>
   )

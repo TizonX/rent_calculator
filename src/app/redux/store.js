@@ -1,8 +1,11 @@
 const { configureStore } = require("@reduxjs/toolkit");
-import reducer from "./slice"
+import user from "./slice";
+import propertyDetails from "./propertyData";
 export const store = configureStore({
-    // reducername(key): reducer-function(value)
-    // ex: reducer1: counterProgram
-    reducer
+    reducer:
+    {
+        user,
+        propertyDetails
+    },
 })
 
