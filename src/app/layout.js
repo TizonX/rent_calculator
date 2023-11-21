@@ -22,9 +22,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head />
       <body className={inter.className}>
-        {/* <Providers> */}
+        <Providers>
         {children}
-        {/* </Providers> */}
+        </Providers>
       </body>
     </html>
   )
