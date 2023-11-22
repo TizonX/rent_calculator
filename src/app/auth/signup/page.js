@@ -1,12 +1,12 @@
-import React from 'react'
-import AuthLayout from '../../../../Components/Layouts/AuthLayout'
+import React from "react";
+import AuthLayout from "../../../../Components/Layouts/AuthLayout";
+import SignupIndex from "../../../../Components/Signup";
 const SignUp = () => {
   return (
     <AuthLayout>
-    <div>SignUp</div>
-
+      <SignupIndex />
     </AuthLayout>
-  )
-}
+  );
+};
 
-export default SignUp
+export default SignUp;
