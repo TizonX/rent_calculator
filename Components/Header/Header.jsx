@@ -4,10 +4,7 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-<<<<<<< HEAD
-=======
 import Link from "next/link";
->>>>>>> vishal
 
 function Header() {
   return (
@@ -22,11 +19,7 @@ function Header() {
             navbarScroll
           >
             <Nav.Link href="#action1">Home</Nav.Link>
-<<<<<<< HEAD
-            <Nav.Link href="#action2">Link</Nav.Link>
-=======
             <Link href="/about">About</Link>
->>>>>>> vishal
             <NavDropdown title="Link" id="navbarScrollingDropdown">
               <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action4">
