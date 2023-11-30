@@ -2,7 +2,15 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import "../../style/login/login.css";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { addUserDetails } from "@/app/redux/userDetail";
+import { useRouter } from "next/navigation";
+useDispatch
 const LoginIndex = () => {
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.UserDetail.userData);
+  const router = useRouter();
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -14,9 +22,34 @@ const LoginIndex = () => {
       [name]: value,
     }));
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(loginData);
+    try {
+      let data = loginData;
+
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'http://localhost:8002/auth/signin/owner',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: data
+      };
+
+      const res = await axios.request(config);
+      if (res) {
+        const data = res.data
+        const { token } = data;
+        localStorage.setItem("access-token", token);
+        dispatch(addUserDetails(data));
+        router.push(`/`);
+      }
+    } catch (error) {
+      console.log("else: ", error);
+    }
+
+
   };
   return (
     <div className="container">
@@ -47,12 +80,6 @@ const LoginIndex = () => {
                   htmlFor="password"
                 >
                   Password
-                  {/* <Link
-                    className="ml-auto border-link small-xl"
-                    href="/forget-password"
-                  >
-                    Forget?
-                  </Link> */}
                 </label>
                 <input
                   type="password"
@@ -64,20 +91,6 @@ const LoginIndex = () => {
                   onChange={handleInputFields}
                 />
               </div>
-              {/* <div className="form-group mt-4 mb-4">
-                <div className="custom-control custom-checkbox">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id="remember-me"
-                    name="remember-me"
-                    data-parsley-multiple="remember-me"
-                  />
-                  <label className="custom-control-label" for="remember-me">
-                    Remember me?
-                  </label>
-                </div>
-              </div> */}
               <div className="form-group pt-3">
                 <button
                   className="btn btn-primary btn-block vishal"

@@ -1,11 +1,8 @@
 const { configureStore } = require("@reduxjs/toolkit");
-import user from "./slice";
-import propertyDetails from "./propertyData";
+import UserDetail from "./userDetail"
 export const store = configureStore({
-    reducer:
-    {
-        user,
-        propertyDetails
-    },
+    reducer: {
+        UserDetail
+    }
 })
 
