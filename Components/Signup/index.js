@@ -86,4 +86,4 @@ const SignupIndex = () => {
   )
 }
 
-export default SignUpIndex
+export default SignupIndex

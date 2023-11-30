@@ -8,7 +8,9 @@ import UserProfileCard from "./UserProfile/UserProfileCard";
 import axios from "axios";
 import { Container } from 'react-bootstrap';
 import { getPropertyDetailsFakeAPI } from "./FakeAPICalls";
+import { useRouter } from 'next/navigation'
 const ComponentIndex = () => {
+  const router = useRouter()
   const [renterData, setRenterData] = useState([]);
   const [propertyData, setPropertyData] = useState([]);
   const [error, setError] = useState({
@@ -17,6 +19,11 @@ const ComponentIndex = () => {
   })
   useEffect(() => {
     // getAllRenter();
+    const isTokenPresent = localStorage.getItem("access-token");
+    if (!isTokenPresent) {
+      router.push("/auth/login")
+      return;
+    }
     getPropertyDetails();
   }, []);
   // API call's
@@ -67,7 +74,7 @@ const ComponentIndex = () => {
           </Col>
           <Col lg={10}>
             <Container>
-              <HomeCard propertyData={propertyData}/>
+              <HomeCard propertyData={propertyData} />
             </Container>
           </Col>
         </Row>
