@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import "../../style/login/login.css";
 import axios from "axios";
+import { URL_PORT } from "../constant";
 const SignupIndex = () => {
   const router = useRouter();
   const [signupData, setSignupData] = useState({
@@ -46,7 +47,7 @@ const SignupIndex = () => {
   ];
   //-------------------API START-------------------------
   const signupAPICall = async () => {
-    const apiUrl = `http://15.207.186.147/auth/signup/owner`;
+    const apiUrl = `${URL_PORT}/auth/signup/owner`;
     axios
       .post(apiUrl, signupData)
       .then((response) => {
