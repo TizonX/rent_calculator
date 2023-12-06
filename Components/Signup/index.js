@@ -4,7 +4,6 @@ const SignUp = () => {
     return (
         <div>
             <Link href="/auth/login">login</Link>
-            
         </div>
     )
 }
