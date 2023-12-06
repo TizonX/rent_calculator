@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import "../../style/login/login.css";
 import axios from "axios";
@@ -15,6 +15,19 @@ const LoginIndex = () => {
     email: "",
     password: "",
   });
+  const [error, setError] = useState({
+    status: false,
+    msg: ""
+  })
+  useEffect(() => {
+    if (error.status) {
+      setTimeout(() => setError({
+        status: false,
+        msg: ""
+      }), 3000);
+    }
+  }, [error.status]);
+
   const handleInputFields = (e) => {
     const { name, value } = e.target;
     setLoginData(() => ({
@@ -40,13 +53,21 @@ const LoginIndex = () => {
       const res = await axios.request(config);
       if (res) {
         const data = res.data
-        const { token } = data;
+        const { token, _id, role } = data;
         localStorage.setItem("access-token", token);
+        localStorage.setItem("user-id", _id);
+        localStorage.setItem("user-role", role);
         dispatch(addUserDetails(data));
         router.push(`/`);
       }
     } catch (error) {
       console.log("else: ", error);
+      setError(
+        {
+          status: true,
+          message: error.message,
+        }
+      )
     }
 
 
@@ -105,6 +126,7 @@ const LoginIndex = () => {
               <Link href="/auth/signup">Sign up</Link>
             </p>
           </div>
+          {error.status && <div>{error.message}</div>}
         </div>
       </div>
     </div>

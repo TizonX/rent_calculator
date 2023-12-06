@@ -1,6 +1,6 @@
 import React from "react";
 import AuthLayout from "../../../../Components/Layouts/AuthLayout";
-import SignupIndex from "../../../../Components/Signup";
+import SignupIndex from "../../../../Components/SignUp"; 
 const SignUp = () => {
   return (
     <AuthLayout>

@@ -78,51 +78,12 @@ const SignupIndex = () => {
     signupAPICall();
   };
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-md-5 mx-auto">
-          <div className="card card-body">
-            <form onSubmit={handleSubmit}>
-              <input
-                type="hidden"
-                name="_csrf"
-                value="7635eb83-1f95-4b32-8788-abec2724a9a4"
-              />
-              {formArr.map((field, inx) => (
-                <div className="form-group required" key={inx}>
-                  <label htmlFor="firstName">{field.label}</label>
-                  <input
-                    type={field.type}
-                    className="form-control text-lowercase"
-                    id={field.name}
-                    required=""
-                    name={field.name}
-                    value={signupData[field.name]}
-                    onChange={handleInputFields}
-                  />
-                </div>
-              ))}
-              <div className="form-group pt-3">
-                <button
-                  className="btn btn-primary btn-block vishal"
-                  type="submit"
-                >
-                  Sign Up
-                </button>
-              </div>
-            </form>
-            <p className="small-xl pt-3 text-center">
-              <span className="text-muted">Not a member?</span>
-              <Link href="/auth/login">Login</Link>
-            </p>
-            {errMsg.status && <div className="text-danger">{errMsg.msg}</div>}
-          </div>
+    <div>
+        SignUpIndex
+        
+        <Link href="/auth/login">login</Link>
         </div>
-      </div>
-    </div>
-  );
-};
+  )
+}
 
-export default SignupIndex;
-
-
+export default SignupIndex

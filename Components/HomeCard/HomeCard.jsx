@@ -26,7 +26,9 @@ const HomeCard = ({ propertyData }) => {
             /> */}
               <Image src={HomeDefaultImage} alt="Home" />
             </div>
-            <h2>{count.name}</h2>
+            <h2>{count.propertyName}</h2>
+            <h3>{count.houseNo}</h3>
+            <p>{count.address}</p>
           </div>
         ))
         :
