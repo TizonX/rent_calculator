@@ -5,7 +5,7 @@ import Link from "next/link";
 import "../../style/login/login.css";
 import axios from "axios";
 import { URL_PORT } from "../constant";
-const SignupIndex = () => {
+const SignUpIndex = () => {
   const router = useRouter();
   const [signupData, setSignupData] = useState({
     firstName: "",
@@ -86,4 +86,4 @@ const SignupIndex = () => {
   )
 }
 
-export default SignupIndex
+export default SignUpIndex
