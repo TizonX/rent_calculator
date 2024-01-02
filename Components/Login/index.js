@@ -6,7 +6,8 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addUserDetails } from "@/app/redux/userDetail";
 import { useRouter } from "next/navigation";
-useDispatch
+import URL_DOMAIN from "../../constant";
+useDispatch;
 const LoginIndex = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.UserDetail.userData);
@@ -17,14 +18,18 @@ const LoginIndex = () => {
   });
   const [error, setError] = useState({
     status: false,
-    msg: ""
-  })
+    msg: "",
+  });
   useEffect(() => {
     if (error.status) {
-      setTimeout(() => setError({
-        status: false,
-        msg: ""
-      }), 3000);
+      setTimeout(
+        () =>
+          setError({
+            status: false,
+            msg: "",
+          }),
+        3000
+      );
     }
   }, [error.status]);
 
@@ -41,18 +46,18 @@ const LoginIndex = () => {
       let data = loginData;
 
       let config = {
-        method: 'post',
+        method: "post",
         maxBodyLength: Infinity,
-        url: 'http://localhost:8002/auth/signin/owner',
+        url: `http://localhost:8080/auth/signin/owner`,
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        data: data
+        data: data,
       };
-
+      console.log(config)
       const res = await axios.request(config);
       if (res) {
-        const data = res.data
+        const data = res.data;
         const { token, _id, role } = data;
         localStorage.setItem("access-token", token);
         localStorage.setItem("user-id", _id);
@@ -62,15 +67,11 @@ const LoginIndex = () => {
       }
     } catch (error) {
       console.log("else: ", error);
-      setError(
-        {
-          status: true,
-          message: error.message,
-        }
-      )
+      setError({
+        status: true,
+        message: error.message,
+      });
     }
-
-
   };
   return (
     <div className="container">

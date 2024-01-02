@@ -6,31 +6,37 @@ import UserList from "./UserList/UserList";
 import HomeCard from "./HomeCard/HomeCard";
 import UserProfileCard from "./UserProfile/UserProfileCard";
 import axios from "axios";
-import { Container } from 'react-bootstrap';
+import { Container, Modal } from "react-bootstrap";
 import { getPropertyDetailsFakeAPI } from "./FakeAPICalls";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
+import { URL_DOMAIN } from "../constant";
 const ComponentIndex = () => {
-  const router = useRouter()
+  const router = useRouter();
   const [userData, setUserData] = useState(null);
   const [propertyData, setPropertyData] = useState([]);
+  const [lgShow, setLgShow] = useState(false);
   const [error, setError] = useState({
     status: false,
     msg: "",
-  })
+  });
   // handle error
   useEffect(() => {
     if (error.status) {
-      setTimeout(() => setError({
-        status: false,
-        msg: ""
-      }), 3000);
+      setTimeout(
+        () =>
+          setError({
+            status: false,
+            msg: "",
+          }),
+        3000
+      );
     }
   }, [error.status]);
 
   useEffect(() => {
     const isTokenPresent = localStorage.getItem("access-token");
     if (!isTokenPresent) {
-      router.push("/auth/login")
+      router.push("/auth/login");
       return;
     }
     getAllUserHomeAndRoomDetail();
@@ -47,9 +53,9 @@ const ComponentIndex = () => {
       }
       const config = {
         method: "get",
-        url: `http://localhost:8002/api/v1/home/${userId}`,
-        headers: { 'Authorization': `Bearer ${isTokenPresent}` }
-      }
+        url: `http://localhost:8080/api/v1/home/${userId}`,
+        headers: { Authorization: `Bearer ${isTokenPresent}` },
+      };
       const response = await axios.request(config);
       const data = response.data;
       setPropertyData(data[0]?.homes);
@@ -63,9 +69,7 @@ const ComponentIndex = () => {
   return (
     <>
       <Row>
-        <Col>
-          {/* <NavigationBar /> */}
-        </Col>
+        <Col>{/* <NavigationBar /> */}</Col>
       </Row>
       <Container>
         <Row>
@@ -75,11 +79,30 @@ const ComponentIndex = () => {
           </Col>
           <Col lg={10}>
             <Container>
-              <HomeCard propertyData={propertyData} />
+              <HomeCard
+                propertyData={propertyData}
+                open={lgShow}
+                close={setLgShow}
+              />
             </Container>
           </Col>
         </Row>
       </Container>
+
+      {/* insert new property data */}
+      <Modal
+        size="lg"
+        show={lgShow}
+        onHide={() => setLgShow(false)}
+        aria-labelledby="example-modal-sizes-title-lg"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="example-modal-sizes-title-lg">
+            Large Modal
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>...</Modal.Body>
+      </Modal>
     </>
   );
 };
