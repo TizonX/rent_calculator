@@ -18,6 +18,7 @@ const ComponentIndex = () => {
   //
   const [file, setFile] = useState(null);
   const [filename, setFilename] = useState("Choose File");
+  const [files, setFiles] = useState(null);
   //
   const [error, setError] = useState({
     status: false,
@@ -105,18 +106,32 @@ const ComponentIndex = () => {
   // API end
   const handlePhotoSelect = (evt) => {
     setFile(evt.target.files[0]);
-    setFilename(evt.target.files[0].name);
+  };
+  //
+  const handlePhotoSelect2 = (evt) => {
+    setFiles(evt.target.files);
   };
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const userId = localStorage.getItem("user-id");
-    const obj = {
-      ...formData,
-      upload: file,
-      owner_Id: userId,
-    };
-    console.log(obj);
-    storeSingleHomeData(obj);
+    const formDataObj = new FormData();
+    formDataObj.append("propertyName", formData.propertyName);
+    formDataObj.append("houseNo", formData.houseNo);
+    formDataObj.append("address", formData.address);
+    formDataObj.append("noOfFlore", formData.noOfFlore);
+    formDataObj.append("owner_Id", userId);
+
+    if (file) {
+      formDataObj.append("upload", file);
+    }
+
+    if (files && files.length > 0) {
+      for (let i = 0; i < files.length; i++) {
+        formDataObj.append("uploadMultiple", files[i]);
+      }
+    }
+
+    storeSingleHomeData(formDataObj);
   };
   const handleFormData = (e) => {
     const { name, value } = e.target;
@@ -164,11 +179,22 @@ const ComponentIndex = () => {
             enctype="multipart/form-data"
             onSubmit={handleFormSubmit}
           >
+            <label htmlFor="upload">single image</label>
             <input
               filename={file}
               type="file"
+              id="upload"
               name="upload"
               onChange={handlePhotoSelect}
+            />
+            <label htmlFor="uploadMultiple">multiple image</label>
+            <input
+              filename={files}
+              type="file"
+              id="uploadMultiple"
+              name="uploadMultiple"
+              multiple
+              onChange={handlePhotoSelect2}
             />
             <input
               type="text"

@@ -18,7 +18,7 @@ const HomeCard = ({ propertyData, open, close }) => {
           <div
             className="card"
             key={index}
-            onClick={() => handlePropertySelect(count.id)}
+            onClick={() => handlePropertySelect(count._id)}
           >
             <div className="home-image">
               {/* <FontAwesomeIcon
