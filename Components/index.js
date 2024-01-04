@@ -15,9 +15,19 @@ const ComponentIndex = () => {
   const [userData, setUserData] = useState(null);
   const [propertyData, setPropertyData] = useState([]);
   const [lgShow, setLgShow] = useState(false);
+  //
+  const [file, setFile] = useState(null);
+  const [filename, setFilename] = useState("Choose File");
+  //
   const [error, setError] = useState({
     status: false,
     msg: "",
+  });
+  const [formData, setFormData] = useState({
+    propertyName: "",
+    houseNo: "",
+    address: "",
+    noOfFlore: 1,
   });
   // handle error
   useEffect(() => {
@@ -64,8 +74,54 @@ const ComponentIndex = () => {
       console.error("An error occurred:", error);
     }
   };
+  const storeSingleHomeData = async (data) => {
+    try {
+      const isTokenPresent = localStorage.getItem("access-token");
+      const config = {
+        method: "post",
+        url: `http://localhost:8080/api/v1/home/`,
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${isTokenPresent}`,
+        },
+        data,
+      };
 
+      const res = await axios.request(config);
+      if (res) {
+        setFormData({
+          propertyName: "",
+          houseNo: "",
+          address: "",
+          noOfFlore: 1,
+        });
+        setLgShow(false);
+        getAllUserHomeAndRoomDetail();
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   // API end
+  const handlePhotoSelect = (evt) => {
+    setFile(evt.target.files[0]);
+    setFilename(evt.target.files[0].name);
+  };
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const userId = localStorage.getItem("user-id");
+    const obj = {
+      ...formData,
+      upload: file,
+      owner_Id: userId,
+    };
+    console.log(obj);
+    storeSingleHomeData(obj);
+  };
+  const handleFormData = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
   return (
     <>
       <Row>
@@ -98,13 +154,69 @@ const ComponentIndex = () => {
       >
         <Modal.Header closeButton>
           <Modal.Title id="example-modal-sizes-title-lg">
-            Large Modal
+            Add property details
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>...</Modal.Body>
+        <Modal.Body>
+          <form
+            className="d-flex flex-column"
+            method="post"
+            enctype="multipart/form-data"
+            onSubmit={handleFormSubmit}
+          >
+            <input
+              filename={file}
+              type="file"
+              name="upload"
+              onChange={handlePhotoSelect}
+            />
+            <input
+              type="text"
+              name="propertyName"
+              placeholder="property name"
+              value={formData.propertyName}
+              onChange={handleFormData}
+            />
+            <input
+              type="text"
+              name="houseNo"
+              placeholder="house no"
+              value={formData.houseNo}
+              onChange={handleFormData}
+            />
+            <input
+              type="text"
+              name="address"
+              placeholder="address"
+              value={formData.address}
+              onChange={handleFormData}
+            />
+            <input
+              type="number"
+              name="noOfFlore"
+              placeholder="no of flore"
+              value={formData.noOfFlore}
+              onChange={handleFormData}
+            />
+
+            <button type="submit">Submit</button>
+          </form>
+        </Modal.Body>
       </Modal>
     </>
   );
 };
 
 export default ComponentIndex;
+/*
+{
+    "bannerImage" : "...",
+    "multiImage":[],
+    "propertyName":"Vishnu Lok",
+    "houseNo":"L/V-0|1",
+    "address":"Swarg Lok",
+    "noOfFlore":"16",
+    "owner_Id":"655b3c6120e98ae3ea42fcc1"
+}
+
+*/

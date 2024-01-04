@@ -24,7 +24,14 @@ const HomeCard = ({ propertyData, open, close }) => {
               {/* <FontAwesomeIcon
               icon={faHouse}
             /> */}
-              <Image src={HomeDefaultImage} alt="Home" />
+              <Image
+                src={count.bannerImage}
+                // src={HomeDefaultImage}
+                width={100}
+                height={100}
+                alt="Home"
+                onError={(e) => (e.currentTarget.src = HomeDefaultImage)}
+              />
             </div>
             <h2>{count.propertyName}</h2>
             <h3>{count.houseNo}</h3>
