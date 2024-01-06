@@ -1,9 +1,17 @@
-import React from 'react'
-import PropertyDetails from '../../../../Components/PropertyDetails'
-const PropertyDetailsPage = () => {
-  return (
-    <PropertyDetails />
-  )
-}
+"use client";
+import React, { useEffect, useState } from "react";
+import PropertyDetails from "../../../../Components/PropertyDetails";
+import { useParams } from "next/navigation";
 
-export default PropertyDetailsPage
+const PropertyDetailsPage = () => {
+  const params = useParams();
+  const [homeId, setHomeId] = useState(null);
+  useEffect(() => {
+    setHomeId(params.propertyID);
+    console.log("p: ", params.propertyID)
+  }, [params.propertyID]);
+
+  return <div>{homeId && <PropertyDetails homeId={homeId} />}</div>;
+};
+
+export default PropertyDetailsPage;
