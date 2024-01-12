@@ -10,8 +10,7 @@ import ListOfRenter from "../ListOfRenter";
 import SingleRenterDetails from "../ListOfRenter/SingleRenterDetails";
 import axios from "axios";
 import { formatDate } from "../../../HelperFunctions";
-const MyComponent = ({ homeId }) => {
-  console.log("p3: ", homeId);
+const MyComponent = ({ homeId, openModal = null }) => {
   const [propertyData, setPropertyData] = useState(null);
   const [error, setError] = useState({
     status: false,
@@ -83,11 +82,11 @@ const MyComponent = ({ homeId }) => {
           {/* room card */}
           {/* propertyData?.rooms?.map((room, inx) => ( */}
           <div className="d-flex">
-            <div className="card">
+            <div className="card" onClick={openModal}>
               <div className="card-content">+</div>
             </div>
             {[1].map((room, inx) => (
-              <div className="card">
+              <div className="card" key={inx}>
                 <Image
                   src={PropertDefaultImg}
                   alt="Card"
