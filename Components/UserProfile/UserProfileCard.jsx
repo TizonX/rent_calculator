@@ -7,8 +7,8 @@ const UserProfileCard = ({userData}) => {
             <div className="profile-image">
                 <img src={defaultProfile} alt="User" />
             </div>
-            <h2 className="profile-title">{userData.firstName+" "+userData.lastName} </h2>
-            <p className="profile-info">{userData.role}</p>
+            <h2 className="profile-title">{userData?.firstName+" "+userData?.lastName} </h2>
+            <p className="profile-info">{userData?.role}</p>
         </div>
     );
 };

@@ -9,6 +9,7 @@ import {
 import Spinner from '../ReUsableComponents/Loader';
 import HomeDefaultImage from "../../asset/image/homeDefault.jpg"
 const HomeCard = ({ propertyData }) => {
+  console.log("c",propertyData)
   const router = useRouter()
   const handlePropertySelect = (param) => {
     router.push(`/property-details/${param}`);
