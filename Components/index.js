@@ -64,7 +64,7 @@ const ComponentIndex = () => {
       }
       const config = {
         method: "get",
-        url: `http://localhost:8080/api/v1/home/${userId}`,
+        url: `http://localhost:8080/api/v1/home`,
         headers: { Authorization: `Bearer ${isTokenPresent}` },
       };
       const response = await axios.request(config);

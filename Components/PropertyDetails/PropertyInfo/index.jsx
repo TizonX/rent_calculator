@@ -1,75 +1,111 @@
-import React, { useState, useEffect } from 'react';
-import "../../../style/PropertyDetails/PropertyInfo.css"
-import PropertDefaultImg from "../../../asset/image/homeDefault.jpg"
-import Image from 'next/image';
+import React, { useState, useEffect } from "react";
+import "../../../style/PropertyDetails/PropertyInfo.css";
+import PropertDefaultImg from "../../../asset/image/homeDefault.jpg";
+import Image from "next/image";
 import { getSinglePropertyDetailsFakeAPI } from "../../FakeAPICalls";
-import SpinnerLoader from '../../ReUsableComponents/Loader';
-import { Container } from 'react-bootstrap';
-import HomeCard from '../../HomeCard/HomeCard';
-import ListOfRenter from '../ListOfRenter';
+import SpinnerLoader from "../../ReUsableComponents/Loader";
+import { Container } from "react-bootstrap";
+import HomeCard from "../../HomeCard/HomeCard";
+import ListOfRenter from "../ListOfRenter";
 import SingleRenterDetails from "../ListOfRenter/SingleRenterDetails";
-const MyComponent = () => {
+import axios from "axios";
+import { formatDate } from "../../../HelperFunctions";
+const MyComponent = ({ homeId }) => {
+  console.log("p3: ", homeId);
   const [propertyData, setPropertyData] = useState(null);
   const [error, setError] = useState({
     status: false,
     msg: "",
-  })
+  });
 
   useEffect(() => {
     getSinglePropertyDetails();
   }, []);
   const getSinglePropertyDetails = async () => {
     try {
-      const res = await getSinglePropertyDetailsFakeAPI();
+      const userId = localStorage.getItem("user-id");
+      const isTokenPresent = localStorage.getItem("access-token");
+      //
+      const config = {
+        method: "get",
+        url: `http://localhost:8080/api/v1/home/${homeId}`,
+        headers: {
+          Authorization: `Bearer ${isTokenPresent}`,
+          "Content-Type": "application/json",
+        },
+      };
+      //
+      const res = await axios.request(config);
       if (res) {
         const data = res.data;
         setPropertyData(data);
       }
     } catch (error) {
+      console.log(error.message);
       setError({
         status: true,
-        msg: "Somthing wenths wrong!!!"
-      })
+        msg: "Somthing wenths wrong!!!",
+      });
     }
-  }
+  };
   return (
     <div className="container">
-      {propertyData ? <div className='d-flex flex-column'>
-        <div className='d-flex justify-content-center align-items-center'>
-          <div className="image">
-            <Image src={PropertDefaultImg} alt="Image" />
-          </div>
-          <div className="content">
-            <h1 className="title">{propertyData.name}</h1>
-            <p className="paragraph">
-              {propertyData.desctiption}
-            </p>
-          </div>
-        </div>
-        <div>
-          <Container>
-            <div className='d-flex justify-content-between w-75'>
-              <div>
-                <ListOfRenter />
-              </div>
-              <div>
-                <SingleRenterDetails
-                  title="John Doe"
-                  dob="January 1, 1980"
-                  startDate="March 1, 2020"
-                  endDate="December 31, 2022"
-                  imageUrl="https://s3.amazonaws.com/37assets/svn/765-default-avatar.png"
-                />
-              </div>
+      {propertyData ? (
+        <div className="d-flex flex-column justify-content-start ">
+          <div className="d-flex justify-content-center align-items-center property-card-parent">
+            <div className="image">
+              <Image
+                src={
+                  propertyData?.bannerImage
+                    ? propertyData?.bannerImage
+                    : PropertDefaultImg
+                }
+                width={100}
+                height={100}
+                alt="Image"
+              />
             </div>
-          </Container>
+            <div className="content">
+              <h1 className="title">{propertyData?.propertyName}</h1>
+              <p className="paragraph">
+                {propertyData.desctiption || "No Discription Available"}
+              </p>
+              <h2>House No: {propertyData?.houseNo}</h2>
+              <h2>Address: {propertyData?.address}</h2>
+              <h2>No of floors: {propertyData?.noOfFlore}</h2>
+              {propertyData?.createdDate && (
+                <h2>
+                  Property Ready Date: {formatDate(propertyData?.createdDate)}
+                </h2>
+              )}
+            </div>
+          </div>
+          {/* room card */}
+          {/* propertyData?.rooms?.map((room, inx) => ( */}
+          <div className="d-flex">
+            <div className="card">
+              <div className="card-content">+</div>
+            </div>
+            {[1].map((room, inx) => (
+              <div className="card">
+                <Image
+                  src={PropertDefaultImg}
+                  alt="Card"
+                  className="card-image"
+                />
+                <div className="card-content">
+                  <h3 className="name">{room?.name || "Room 1"}</h3>
+                  <p className="facility">{room?.facility || "Facility"}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-        :
-        <div className='spinner'>
+      ) : (
+        <div className="spinner">
           <SpinnerLoader />
         </div>
-      }
+      )}
     </div>
   );
 };
