@@ -22,6 +22,7 @@ const PropertyDetails = ({ homeId }) => {
   const amenities = ["Bed", "Fan", "Wardrobe", "Table", "Chair"]
   const storeSingleRoomData = async (data) => {
     try {
+
       const isTokenPresent = localStorage.getItem("access-token");
       const config = {
         method: "post",
@@ -32,7 +33,6 @@ const PropertyDetails = ({ homeId }) => {
         },
         data,
       };
-
       const res = await axios.request(config);
       if (res) {
         setFormData({
@@ -48,6 +48,7 @@ const PropertyDetails = ({ homeId }) => {
         status: true,
         msg: error.response.data.error,
       })
+      // console.log(error)
     }
   }
   const handleFormSubmit = (e) => {
@@ -57,6 +58,7 @@ const PropertyDetails = ({ homeId }) => {
     formDataObj.append("flore", formData.flore);
     formDataObj.append("roomNo", formData.roomNo);
     formDataObj.append("roomType", formData.roomType);
+    formDataObj.append("facility", facility);
     if (file) {
       formDataObj.append("image", file);
     }

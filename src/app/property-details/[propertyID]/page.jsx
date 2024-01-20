@@ -8,7 +8,6 @@ const PropertyDetailsPage = () => {
   const [homeId, setHomeId] = useState(null);
   useEffect(() => {
     setHomeId(params.propertyID);
-    console.log("p: ", params.propertyID)
   }, [params.propertyID]);
 
   return <div>{homeId && <PropertyDetails homeId={homeId} />}</div>;
