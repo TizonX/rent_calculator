@@ -3,12 +3,13 @@
 import './globals.css'
 import "../../style/globalTheme/globalThem.css";
 import { Inter } from 'next/font/google'
-
+import "../../style/forms.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Providers } from './redux/providers';
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
+import Navbar from './nav/page';
 config.autoAddCss = false;
 
 const inter = Inter({ subsets: ['latin'] })
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
       <head />
       <body className={inter.className}>
         <Providers>
+          <Navbar/>
         {children}
         </Providers>
       </body>
