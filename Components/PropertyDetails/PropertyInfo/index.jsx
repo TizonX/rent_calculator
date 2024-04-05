@@ -10,14 +10,15 @@ import ListOfRenter from "../ListOfRenter";
 import SingleRenterDetails from "../ListOfRenter/SingleRenterDetails";
 import axios from "axios";
 import { formatDate } from "../../../HelperFunctions";
-const MyComponent = ({ homeId }) => {
-  console.log("p3: ", homeId);
+const MyComponent = ({ homeId, openModal = null }) => {
   const [propertyData, setPropertyData] = useState(null);
+  const [roomData, setRoomData] = useState(null);
+
   const [error, setError] = useState({
     status: false,
     msg: "",
   });
-
+  console.log("room: ", roomData);
   useEffect(() => {
     getSinglePropertyDetails();
   }, []);
@@ -39,6 +40,7 @@ const MyComponent = ({ homeId }) => {
       if (res) {
         const data = res.data;
         setPropertyData(data);
+        setRoomData(data.rooms);
       }
     } catch (error) {
       console.log(error.message);
@@ -82,20 +84,23 @@ const MyComponent = ({ homeId }) => {
           </div>
           {/* room card */}
           {/* propertyData?.rooms?.map((room, inx) => ( */}
-          <div className="d-flex">
-            <div className="card">
+          <div className="d-flex parent-card">
+            <div className="card" onClick={openModal}>
               <div className="card-content">+</div>
             </div>
-            {[1].map((room, inx) => (
-              <div className="card">
+            {roomData?.map((room, inx) => (
+              <div className="card" key={inx}>
                 <Image
-                  src={PropertDefaultImg}
+                  src={room.image ? room.image : PropertDefaultImg}
                   alt="Card"
                   className="card-image"
+                  width={30}
+                  height={30}
                 />
                 <div className="card-content">
-                  <h3 className="name">{room?.name || "Room 1"}</h3>
-                  <p className="facility">{room?.facility || "Facility"}</p>
+                  <h3 className="name">{room?.roomNo}</h3>
+                  <p className="facility">{room?.facility}</p>
+                  {room?.roomType && <p className="facility">RoomType: {room?.roomType}</p>}
                 </div>
               </div>
             ))}
