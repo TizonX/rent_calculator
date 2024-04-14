@@ -12,25 +12,22 @@ const HomeCard = ({ propertyData, open, close }) => {
     router.push(`/property-details/${param}`);
   };
   return (
-    <div className="parentCard">
+    <div class="parentCard">
+    <div class="card-container">
       {propertyData.length > 0 ? (
         propertyData.map((count, index) => (
           <div
-            className="card"
+            class="card"
             key={index}
             onClick={() => handlePropertySelect(count._id)}
           >
-            <div className="home-image">
-              {/* <FontAwesomeIcon
-              icon={faHouse}
-            /> */}
-              <Image
+            <div class="home-image">
+              <img
                 src={count.bannerImage}
-                // src={HomeDefaultImage}
-                width={100}
-                height={100}
+                width="100"
+                height="100"
                 alt="Home"
-                onError={(e) => (e.currentTarget.src = HomeDefaultImage)}
+                onerror="(e) => (e.currentTarget.src = HomeDefaultImage)"
               />
             </div>
             <h2>{count.propertyName}</h2>
@@ -39,14 +36,15 @@ const HomeCard = ({ propertyData, open, close }) => {
           </div>
         ))
       ) : (
-        <div className="spinner">
+        <div class="spinner">
           <Spinner />
         </div>
       )}
-
-      {/* add home */}
-      <div onClick={() => close(!open)}>+ Add New Home</div>
     </div>
+  
+    <div class="add-home" onClick={() => close(!open)}>+ Add New Home</div>
+  </div>
+  
   );
 };
 

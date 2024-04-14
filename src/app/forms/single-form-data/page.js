@@ -38,7 +38,7 @@ const SingleFormData = () => {
     }
   };
   return (
-    <>
+    <div className="d-flex">
       {apiData?.map((data, inx) => (
         <div className="card" key={inx}>
           <Image
@@ -46,7 +46,7 @@ const SingleFormData = () => {
             alt="Card"
             className="card-image"
           />
-          <h2 className="card-title">{data.text}</h2>
+          <h2 className="card-title">{data.text || "-"}</h2>
           <button
             onClick={() => downloadImage(data?.image)}
             className="download-btn "
@@ -55,7 +55,7 @@ const SingleFormData = () => {
           </button>
         </div>
       ))}
-    </>
+    </div>
   );
 };
 

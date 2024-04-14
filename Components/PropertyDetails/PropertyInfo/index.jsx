@@ -51,66 +51,34 @@ const MyComponent = ({ homeId, openModal = null }) => {
     }
   };
   return (
-    <div className="container">
-      {propertyData ? (
-        <div className="d-flex flex-column justify-content-start ">
-          <div className="d-flex justify-content-center align-items-center property-card-parent">
-            <div className="image">
-              <Image
-                src={
-                  propertyData?.bannerImage
-                    ? propertyData?.bannerImage
-                    : PropertDefaultImg
-                }
-                width={100}
-                height={100}
-                alt="Image"
-              />
-            </div>
-            <div className="content">
-              <h1 className="title">{propertyData?.propertyName}</h1>
-              <p className="paragraph">
-                {propertyData.desctiption || "No Discription Available"}
-              </p>
-              <h2>House No: {propertyData?.houseNo}</h2>
-              <h2>Address: {propertyData?.address}</h2>
-              <h2>No of floors: {propertyData?.noOfFlore}</h2>
-              {propertyData?.createdDate && (
-                <h2>
-                  Property Ready Date: {formatDate(propertyData?.createdDate)}
-                </h2>
-              )}
-            </div>
-          </div>
-          {/* room card */}
-          {/* propertyData?.rooms?.map((room, inx) => ( */}
-          <div className="d-flex parent-card">
-            <div className="card" onClick={openModal}>
-              <div className="card-content">+</div>
-            </div>
-            {roomData?.map((room, inx) => (
-              <div className="card" key={inx}>
-                <Image
-                  src={room.image ? room.image : PropertDefaultImg}
-                  alt="Card"
-                  className="card-image"
-                  width={30}
-                  height={30}
-                />
-                <div className="card-content">
-                  <h3 className="name">{room?.roomNo}</h3>
-                  <p className="facility">{room?.facility}</p>
-                  {room?.roomType && <p className="facility">RoomType: {room?.roomType}</p>}
-                </div>
-              </div>
-            ))}
-          </div>
+    <div className="card">
+      <div className="image-container">
+        <img
+          alt="Image"
+          src={propertyData?.bannerImage || PropertDefaultImg}
+          width="100"
+          height="100"
+        />
+      </div>
+      <div className="content">
+        <h2 className="title">{propertyData?.propertyName}</h2>
+        <p className="date">House No: {propertyData?.houseNo}</p>
+        <p className="date">Address: {propertyData?.address}</p>
+        <p className="date">No of floors: {propertyData?.noOfFlore}</p>
+        {propertyData?.createdDate && (
+          <p className="date">
+            Property Ready Date: {formatDate(propertyData?.createdDate)}
+          </p>
+        )}
+
+        <p className="description">
+          {propertyData?.desctiption || "No Description Available"}
+        </p>
+        <div className="buttons">
+          <button className="button">Button 1</button>
+          <button className="button">Button 2</button>
         </div>
-      ) : (
-        <div className="spinner">
-          <SpinnerLoader />
-        </div>
-      )}
+      </div>
     </div>
   );
 };

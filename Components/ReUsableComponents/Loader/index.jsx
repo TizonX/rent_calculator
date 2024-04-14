@@ -1,11 +1,6 @@
-import React from 'react'
-import Spinner from 'react-bootstrap/Spinner';
+import React from "react";
 const SpinnerLoader = () => {
-  return (
-    <Spinner animation="border" role="status">
-      <span className="visually-hidden">Loading...</span>
-    </Spinner>
-  )
-}
+  return <span className="visually-hidden">Loading...</span>;
+};
 
-export default SpinnerLoader
+export default SpinnerLoader;

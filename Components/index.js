@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
-import NavigationBar from "./Header/Header";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import UserList from "./UserList/UserList";
-import HomeCard from "./HomeCard/HomeCard";
-import UserProfileCard from "./UserProfile/UserProfileCard";
+
 import axios from "axios";
-import { Container, Modal } from "react-bootstrap";
-import { getPropertyDetailsFakeAPI } from "./FakeAPICalls";
 import { useRouter } from "next/navigation";
-import { URL_DOMAIN } from "../constant";
+import { URL_DOMAIN, defaultProfile, homeDefault } from "../constant";
+import Image from "next/image";
+import UserProfileCard from "./UserProfile/UserProfileCard";
+import Model from "./Model";
 const ComponentIndex = () => {
   const router = useRouter();
   const [userData, setUserData] = useState(null);
@@ -137,112 +133,70 @@ const ComponentIndex = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+  const handlePropertySelect = (param) => {
+    router.push(`/property-details/${param}`);
+  };
   return (
     <>
-      <Row>
-        <Col>{/* <NavigationBar /> */}</Col>
-      </Row>
-      <Container>
-        <Row>
-          <Col lg={2}>
-            {/* <UserList renterData={renterData} /> */}
-            <UserProfileCard userData={userData} />
-          </Col>
-          <Col lg={10}>
-            <Container>
-              <HomeCard
-                propertyData={propertyData}
-                open={lgShow}
-                close={setLgShow}
+      <div className="container mx-auto bg-slate-500 p-4 min-h-screen flex md:flex-row">
+        <div className="max-w-full md:max-w-40 basis-1/2 mx-2">
+          <div className="shadow-lg rounded-md p-4 bg-slate-200">
+            <div className="mx-auto place-content-center">
+              <img
+                src={defaultProfile}
+                alt="User"
+                className="h-10 w-10 object-cover rounded-full mx-auto"
               />
-            </Container>
-          </Col>
-        </Row>
-      </Container>
-
-      {/* insert new property data */}
-      <Modal
-        size="lg"
-        show={lgShow}
-        onHide={() => setLgShow(false)}
-        aria-labelledby="example-modal-sizes-title-lg"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="example-modal-sizes-title-lg">
-            Add property details
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form
-            className="d-flex flex-column"
-            method="post"
-            enctype="multipart/form-data"
-            onSubmit={handleFormSubmit}
-          >
-            <label htmlFor="upload">single image</label>
-            <input
-              filename={file}
-              type="file"
-              id="upload"
-              name="upload"
-              onChange={handlePhotoSelect}
-            />
-            <label htmlFor="uploadMultiple">multiple image</label>
-            <input
-              filename={files}
-              type="file"
-              id="uploadMultiple"
-              name="uploadMultiple"
-              multiple
-              onChange={handlePhotoSelect2}
-            />
-            <input
-              type="text"
-              name="propertyName"
-              placeholder="property name"
-              value={formData.propertyName}
-              onChange={handleFormData}
-            />
-            <input
-              type="text"
-              name="houseNo"
-              placeholder="house no"
-              value={formData.houseNo}
-              onChange={handleFormData}
-            />
-            <input
-              type="text"
-              name="address"
-              placeholder="address"
-              value={formData.address}
-              onChange={handleFormData}
-            />
-            <input
-              type="number"
-              name="noOfFlore"
-              placeholder="no of flore"
-              value={formData.noOfFlore}
-              onChange={handleFormData}
-            />
-
-            <button type="submit">Submit</button>
-          </form>
-        </Modal.Body>
-      </Modal>
+            </div>
+            <div className="mx-auto">
+              <h1 className="text-base font-bold text-center mt-1">
+                {userData?.firstName + " " + userData?.lastName}
+              </h1>
+            </div>
+            <div>
+              <h3 className="text-center text-sm text-slate-400">
+                {userData?.role}
+              </h3>
+            </div>
+          </div>
+          <div className="mt-2 flex items-center">
+            <buttton
+              className="text-center text-white bg-blue-400 mx-auto shadow-lg rounded-md py-1 px-2
+          hover:bg-white hover:text-black text-xs cursor-pointer w-full"
+              onClick={() => setLgShow(true)}
+            >
+              + Add Home
+            </buttton>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-x-4 gap-y-2 ps-16 h-full">
+          {propertyData?.map((count, index) => (
+            <div
+              className="min-w-0 shadow-lg bg-slate-300 rounded-lg p-2"
+              key={index}
+              onClick={() => handlePropertySelect(count._id)}
+            >
+              <div>
+                <img
+                  src={count.bannerImage}
+                  className="h-44 w-full object-cover rounded-md"
+                />
+              </div>
+              <div>
+                <h1 className="text-base font-bold text-center mt-1">
+                  {count.propertyName}
+                </h1>
+                <h3 className="text-xs text-center text-slate-500">
+                  House No: <b>{count.houseNo}</b>
+                </h3>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      {lgShow && <Model closeModel={setLgShow} />}
     </>
   );
 };
 
 export default ComponentIndex;
-/*
-{
-    "bannerImage" : "...",
-    "multiImage":[],
-    "propertyName":"Vishnu Lok",
-    "houseNo":"L/V-0|1",
-    "address":"Swarg Lok",
-    "noOfFlore":"16",
-    "owner_Id":"655b3c6120e98ae3ea42fcc1"
-}
-
-*/

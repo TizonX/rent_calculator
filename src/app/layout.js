@@ -4,7 +4,9 @@ import './globals.css'
 import "../../style/globalTheme/globalThem.css";
 import { Inter } from 'next/font/google'
 import "../../style/forms.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "../../style/add-propert.css";
+
+
 import { Providers } from './redux/providers';
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
