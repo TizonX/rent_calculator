@@ -1,10 +1,8 @@
 
 //
 import './globals.css'
-import "../../style/globalTheme/globalThem.css";
+// import "../../style/globalTheme/globalThem.css";
 import { Inter } from 'next/font/google'
-import "../../style/forms.css";
-import "../../style/add-propert.css";
 
 
 import { Providers } from './redux/providers';

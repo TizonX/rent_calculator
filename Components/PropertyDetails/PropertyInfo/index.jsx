@@ -4,7 +4,6 @@ import PropertDefaultImg from "../../../asset/image/homeDefault.jpg";
 import Image from "next/image";
 import { getSinglePropertyDetailsFakeAPI } from "../../FakeAPICalls";
 import SpinnerLoader from "../../ReUsableComponents/Loader";
-import { Container } from "react-bootstrap";
 import HomeCard from "../../HomeCard/HomeCard";
 import ListOfRenter from "../ListOfRenter";
 import SingleRenterDetails from "../ListOfRenter/SingleRenterDetails";
@@ -51,32 +50,37 @@ const MyComponent = ({ homeId, openModal = null }) => {
     }
   };
   return (
-    <div className="card">
-      <div className="image-container">
-        <img
+    <div className="flex py-8 px-8 ">
+      <div className="border border-solid border-2 border-slate-200 p-4">
+        <Image
           alt="Image"
           src={propertyData?.bannerImage || PropertDefaultImg}
-          width="100"
-          height="100"
+          className="block w-30 h-30 w-full object-cover"
+          width={100}
+          height={100}
         />
       </div>
-      <div className="content">
-        <h2 className="title">{propertyData?.propertyName}</h2>
-        <p className="date">House No: {propertyData?.houseNo}</p>
-        <p className="date">Address: {propertyData?.address}</p>
-        <p className="date">No of floors: {propertyData?.noOfFlore}</p>
+      <div className="mx-2">
+        <h2 className="text-6xl font-bold">{propertyData?.propertyName}</h2>
+        <p className="text-sm text-slate-500">
+          House No: {propertyData?.houseNo}
+        </p>
+        <p className="text-lg italic">Address: {propertyData?.address}</p>
+        <p className="text-sm text-slate-500">
+          No of floors: {propertyData?.noOfFlore}
+        </p>
         {propertyData?.createdDate && (
-          <p className="date">
+          <p className="text-sm text-slate-500">
             Property Ready Date: {formatDate(propertyData?.createdDate)}
           </p>
         )}
 
-        <p className="description">
+        <p className="text-sm text-slate-500">
           {propertyData?.desctiption || "No Description Available"}
         </p>
         <div className="buttons">
-          <button className="button">Button 1</button>
-          <button className="button">Button 2</button>
+          <button className="bg-red-400 p-4 rounded">Delete</button>
+          <button className="bg-green-400 p-4 mx-2 rounded">Edit</button>
         </div>
       </div>
     </div>

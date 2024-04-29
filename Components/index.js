@@ -194,7 +194,118 @@ const ComponentIndex = () => {
           ))}
         </div>
       </div>
-      {lgShow && <Model closeModel={setLgShow} />}
+      {lgShow && (
+        <Model closeModel={setLgShow} handleFormData={handleFormData}>
+          <div className="px-4">
+            <h1 className="p-2 text-center text-xl font-bold text-slate-500">
+              Add property details
+            </h1>
+            <div>
+              <form
+                className="d-flex flex-column"
+                method="post"
+                enctype="multipart/form-data"
+                onSubmit={handleFormSubmit}
+              >
+                <div className="mb-4">
+                  <label
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                    htmlFor="cover-image"
+                  >
+                    cover image
+                  </label>
+                  <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    filename={file}
+                    type="file"
+                    id="cover-image"
+                    name="upload"
+                    onChange={handlePhotoSelect}
+                  />
+                </div>
+                {/*  */}
+                <div className="mb-4">
+                  <label
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                    htmlFor="propertyName"
+                  >
+                    Property Name
+                  </label>
+                  <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type="text"
+                    id="propertyName"
+                    name="propertyName"
+                    placeholder="property name"
+                    value={formData.propertyName}
+                    onChange={handleFormData}
+                  />
+                </div>
+                {/*  */}
+                <div className="mb-4">
+                  <label
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                    htmlFor="houseNo"
+                  >
+                    House Number
+                  </label>
+                  <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type="text"
+                    name="houseNo"
+                    id="houseNo"
+                    placeholder="house no"
+                    value={formData.houseNo}
+                    onChange={handleFormData}
+                  />
+                </div>
+                {/*  */}
+                <div className="mb-4">
+                  <label
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                    htmlFor="address"
+                  >
+                    Property address
+                  </label>
+                  <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type="text"
+                    name="address"
+                    placeholder="address"
+                    id="address"
+                    value={formData.address}
+                    onChange={handleFormData}
+                  />
+                </div>
+                {/*  */}
+                <div className="mb-4">
+                  <label
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                    htmlFor="noOfFlore"
+                  >
+                    No of Flore
+                  </label>
+                  <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type="number"
+                    name="noOfFlore"
+                    id="noOfFlore"
+                    placeholder="no of flore"
+                    value={formData.noOfFlore}
+                    onChange={handleFormData}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="bg-indigo-900 text-xs p-2 rounded text-white hover:text-black hover:bg-white border-2 hover:border-black hover:border-2"
+                >
+                  Submit
+                </button>
+              </form>
+            </div>
+          </div>
+        </Model>
+      )}
     </>
   );
 };
