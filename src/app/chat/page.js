@@ -1,8 +1,10 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import io from "socket.io-client";
 
-const socket = io(`http://localhost:8080`);
+const socket = useMemo(() => {
+  io(`http://localhost:8080`);
+}, []);
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
