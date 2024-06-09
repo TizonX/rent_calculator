@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { URL_DOMAIN, defaultProfile, homeDefault } from "../constant";
-import Image from "next/image";
-import UserProfileCard from "./UserProfile/UserProfileCard";
+import { defaultProfile } from "../constant";
 import Model from "./Model";
+import { useAuth } from "../context/AuthContext";
+
 const ComponentIndex = () => {
+  const { user, logout } = useAuth(); // get user details form here
   const router = useRouter();
   const [userData, setUserData] = useState(null);
   const [propertyData, setPropertyData] = useState([]);
@@ -67,6 +68,7 @@ const ComponentIndex = () => {
       const data = response.data;
       setPropertyData(data[0]?.homes);
       setUserData(data[0]);
+      localStorage.setItem("user-info", JSON.stringify(data[0]));
     } catch (error) {
       console.error("An error occurred:", error);
     }

@@ -1,4 +1,4 @@
-
+"use client"
 //
 import './globals.css'
 // import "../../style/globalTheme/globalThem.css";
@@ -10,6 +10,8 @@ import { Providers } from './redux/providers';
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import Navbar from './nav/page';
+import { AuthProvider } from '../../context/AuthContext';
+
 config.autoAddCss = false;
 
 const inter = Inter({ subsets: ['latin'] })
@@ -24,10 +26,12 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head />
       <body className={inter.className}>
+      <AuthProvider>
         <Providers>
           <Navbar/>
         {children}
         </Providers>
+        </AuthProvider>
       </body>
     </html>
   )
