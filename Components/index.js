@@ -47,7 +47,7 @@ const ComponentIndex = () => {
   useEffect(() => {
     const isTokenPresent = localStorage.getItem("access-token");
     if (!isTokenPresent) {
-      router.push("/auth/login");
+      router.push("/login");
       return;
     }
     getAllUserHomeAndRoomDetail();
@@ -144,17 +144,17 @@ const ComponentIndex = () => {
       </Row>
       <Container>
         <Row>
-          <Col lg={2}>
+          <Col lg={3}>
             {/* <UserList renterData={renterData} /> */}
-            <UserProfileCard userData={userData} />
+            <UserProfileCard
+              userData={userData}
+              open={lgShow}
+              close={setLgShow}
+            />
           </Col>
-          <Col lg={10}>
+          <Col lg={9}>
             <Container>
-              <HomeCard
-                propertyData={propertyData}
-                open={lgShow}
-                close={setLgShow}
-              />
+              <HomeCard propertyData={propertyData} />
             </Container>
           </Col>
         </Row>

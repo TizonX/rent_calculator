@@ -1,11 +1,11 @@
-import React from 'react'
-import Link from 'next/link'
+import React from "react";
+import Link from "next/link";
 const SignUp = () => {
-    return (
-        <div>
-            <Link href="/auth/login">login</Link>
-        </div>
-    )
-}
+  return (
+    <div>
+      <Link href="/login">login</Link>
+    </div>
+  );
+};
 
-export default SignUp
+export default SignUp;
